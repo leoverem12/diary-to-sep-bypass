@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "ЄШ Щоденник — без редиректу",
+  "name": "ЄШ — без редиректу (авто)",
   "short_name": "ЄШ Bypass",
   "version": "1.0.0",
-  "description": "Прибирає автоматичний редирект з diary.eschool-ua.com на sep.eschool-ua.com. Відкривайте щоденник одразу, без зайвих кліків.",
+  "description": "Автоматично визначає вашу роль (учень/вчитель) при першому вході та надалі відкриває потрібний сервіс одразу, без зайвих кліків.",
   "icons": {
     "48": "icon48.png",
     "128": "icon128.png"
@@ -20,24 +20,43 @@
   },
   "content_scripts": [
     {
+      "matches": ["*://sep.eschool-ua.com/*"],
+      "js": ["content_sep.js"],
+      "run_at": "document_idle"
+    },
+    {
       "matches": ["*://diary.eschool-ua.com/*"],
-      "js": ["content_diary.js"],
+      "js": ["content_bypass.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://journal.eschool-ua.com/*"],
+      "js": ["content_bypass.js"],
       "run_at": "document_start"
     }
   ],
   "declarative_net_request": {
     "rule_resources": [
       {
-        "id": "ruleset_1",
+        "id": "ruleset_diary",
         "enabled": true,
-        "path": "rules.json"
+        "path": "rules_diary.json"
+      },
+      {
+        "id": "ruleset_journal",
+        "enabled": true,
+        "path": "rules_journal.json"
       }
     ]
   },
   "permissions": [
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "storage",
+    "tabs"
   ],
   "host_permissions": [
-    "*://diary.eschool-ua.com/*"
+    "*://sep.eschool-ua.com/*",
+    "*://diary.eschool-ua.com/*",
+    "*://journal.eschool-ua.com/*"
   ]
 }

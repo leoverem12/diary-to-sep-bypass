@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "priority": 1,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "sep.eschool-ua.com",
+      "initiatorDomains": ["diary.eschool-ua.com"],
+      "resourceTypes": ["main_frame"]
+    }
+  }
+]
